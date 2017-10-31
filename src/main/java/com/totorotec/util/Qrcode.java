@@ -70,13 +70,11 @@ public class Qrcode extends AbstractVerticle {
             image.createGraphics();
             // 获取
             Graphics2D graphics = (Graphics2D) image.getGraphics();
-            // 色彩
+            // 用全白色块填充整个矩阵
             graphics.setColor(Color.WHITE);
-            // 填充矩形
             graphics.fillRect(0, 0, matrixWidth, matrixWidth);
-            // 色彩
+            // 用编码的黑色色块覆盖
             graphics.setColor(Color.BLACK);
-            // 循环填充
             for (int i = 0; i < matrixWidth; i++) {
                 for (int j = 0; j < matrixWidth; j++) {
                     if (byteMatrix.get(i, j)) {
@@ -84,7 +82,8 @@ public class Qrcode extends AbstractVerticle {
                     }
                 }
             }
-
+            // 输出类型
+            // 目前仅支持 file, dataurl 两种方式
             if (outputType == "dataurl") {
                 // 创建输出流
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
