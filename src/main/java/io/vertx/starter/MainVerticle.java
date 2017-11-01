@@ -8,7 +8,7 @@ public class MainVerticle extends AbstractVerticle {
     @Override
     public void start() {
         DeploymentOptions options = new DeploymentOptions().setInstances(1);
-        vertx.deployVerticle("com.totorotec.util.Qrcode", options);
+        vertx.deployVerticle("com.totorotec.util.QrcodeVerticleTest", options);
     }
 
 }
