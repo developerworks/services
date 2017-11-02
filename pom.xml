@@ -43,24 +43,63 @@
       <artifactId>core</artifactId>
       <version>3.3.1</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/io.vertx/vertx-codegen -->
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-codegen</artifactId>
+      <version>3.5.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-lang-js</artifactId>
+      <version>3.5.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.vertx/vertx-rx-java2 -->
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-rx-java2</artifactId>
       <version>3.5.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.vertx/vertx-service-proxy -->
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-service-proxy</artifactId>
+      <version>3.5.0</version>
+      <classifier>processor</classifier>
     </dependency>
     <!-- 依赖结束 -->
   </dependencies>
   <build>
     <pluginManagement>
       <plugins>
-        <plugin>
+        <!-- <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.5.1</version>
+          <version>3.7.0</version>
           <configuration>
             <source>1.8</source>
             <target>1.8</target>
           </configuration>
+        </plugin> -->
+
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.7.0</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+            <annotationProcessors>
+              <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
+            </annotationProcessors>
+            <generatedSourcesDirectory>
+              ${project.basedir}/src/main/generated
+            </generatedSourcesDirectory>
+            <compilerArgs>
+              <arg>-AoutputDirectory=${project.basedir}/src/main</arg>
+            </compilerArgs>
+          </configuration>
         </plugin>
+
       </plugins>
     </pluginManagement>
     <plugins>
@@ -103,6 +142,24 @@
             <argument>${main.verticle}</argument>
           </arguments>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${project.build.directory}/generated-sources/annotations</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
