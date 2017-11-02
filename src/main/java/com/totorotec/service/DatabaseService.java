@@ -24,6 +24,5 @@ public interface DatabaseService {
 
   // 实际的服务方法
   // void save(String collection, JsonObject document, Handler<AsyncResult<Void>> resultHandler);
-
   public void getUserById(int id, Handler<AsyncResult<JsonObject>> resultHandler);
 }
